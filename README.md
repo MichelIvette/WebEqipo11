@@ -1,4 +1,4 @@
-# WebEqipo11
+# WebEquipo11
 PROYECTO PARA PROGRAMACIÓN WEB DEL EQUIPO 11
 Diagrma de E-R
 
