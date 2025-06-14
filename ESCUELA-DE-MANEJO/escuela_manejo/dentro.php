@@ -22,49 +22,90 @@ $usuario = $_SESSION["usuario"];
 
 
 </head>
- <!--sin clase body-->
+
 <body>
   <div class="wrapper">
-    <!-- Header -->
-    <header>
-      <button class="menu-btn" id="menuToggle"><i class="fas fa-bars"></i></button>
-      <img src="img/Logo_rectangular.jpg" class="logo-container" alt="Logo de la escuela de manejo">
-      <div class="header-icons">
-        <button class="profile-btn">AD</button>
-      </div>
-    </header>
+    <?php include 'menu.php'; ?>
 
-    <!-- 02-06-2025 Sidebar -->
-    <aside class="sidebar" id="sidebar">
-      <ul class="sidebar-menu">
-        <li class="active"><i class="fas fa-home"></i> Inicio</li>
-        <a href="empleados.php" class="menu_subrayado"><li><i class="fa-solid fa-user-tie"></i> Empleados</li></a>
-        <li><i class="fas fa-users"></i> Alumnos</li>
-        <li><i class="fas fa-car"></i> Vehículos</li>
-        <li><i class="fas fa-calendar-alt"></i> Agenda</li>
-        <li><i class="fas fa-file-invoice-dollar"></i> Pagos</li>
-        <li><i class="fas fa-chart-bar"></i> Reportes</li>
-        <li></li>
-        <a href="logout.php" ><li class="salir"><i class="fas fa-sign-out-alt"></i>Cerrar sesión</li></a>
-      </ul>
-    </aside>
+    <main class="main-content" id="mainContent">   
 
-    <!--02-06-2025, main y se cambio la clase text-center x welcome-->
-    <main class="main-content" id="mainContent">
-      <div class="welcome">
-        <h1>¡Bienvenido, <?= htmlspecialchars($usuario) ?>!</h1>
-        <p>Has iniciado sesión correctamente.</p>
-        <a href="logout.php" class="logout-btn">Cerrar sesión</a>
-      </div>
+<?php
+// Inicia la sesión SOLO si no está activa
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Mostrar el mensaje solo si no se ha mostrado antes
+if (!isset($_SESSION['bienvenida_mostrada'])) {
+    $_SESSION['bienvenida_mostrada'] = true;
+?>
+    <div id="bienvenida" class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>¡Bienvenido, <?= htmlspecialchars($usuario) ?>!</strong> Has iniciado sesión correctamente.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+<?php } ?>
+
+      <!--Body-->
+      <section class="hero">
+        <img src="img/clase1.jpg" alt="Clase de manejo" class="hero-img">
+        <div class="hero-text">
+          <h1>Start & Go</h1>
+          <p>Tu camino seguro comienza aquí <br> La escuela de manejo que te prepara para la vida.</p>
+          <!--<a href="#" class="btn btn-secondary btn-lg">¡Inscríbete!</a>-->
+        </div>
+      </section>
+            <!-- Introducción -->
+             <br>
+      <section class="intro py-4 px-3 bg-light rounded shadow-sm mb-5">
+        <h2 class="mb-3 text-center">¿Quiénes somos?</h2>
+        <p>Somos una escuela de manejo comprometida con tu seguridad y aprendizaje, contamos con instructores certificados, vehículos modernos y programas personalizados para que obtengas tu licencia con confianza.</p>
+        <p>Nuestro objetivo es ayudarte a convertirte en un conductor responsable y seguro en cualquier situación vial.</p>
+      </section>
+
+      <!-- Servicios -->
+      <br><br>
+      <section class="services d-flex justify-content-around text-center mb-5 flex-wrap">
+        <div class="service-card px-3 mb-4" style="max-width: 250px;">
+          <i class="fas fa-car fa-3x mb-2 text-primary"></i>
+          <h4>Curso Básico</h4>
+          <p>Aprende desde cero las bases del manejo seguro y responsable.</p>
+        </div>
+        <div class="service-card px-3 mb-4" style="max-width: 250px;">
+          <i class="fas fa-road fa-3x mb-2 text-primary"></i>
+          <h4>Prácticas en Ruta</h4>
+          <p>Ejercita tus habilidades en entornos reales con supervisión.</p>
+        </div>
+        <div class="service-card px-3 mb-4" style="max-width: 250px;">
+          <i class="fas fa-certificate fa-3x mb-2 text-primary"></i>
+          <h4>Certificación</h4>
+          <p>Obtén tu licencia con la guía de instructores certificados.</p>
+        </div>
+      </section>
+
+      <!-- Testimonios -->
+      <section class="testimonials bg-light p-4 rounded shadow-sm mb-5">
+        <h2 class="text-center mb-4">Lo que dicen nuestros alumnos</h2>
+        <div class="testimonial-item mb-3">
+          <p class="fst-italic">"Gracias a Start & Go aprobé mi examen en la primera oportunidad. La atención es excelente."</p>
+          <p class="fw-bold mb-0">- María G.</p>
+        </div>
+        <div class="testimonial-item">
+          <p class="fst-italic">"Las clases prácticas me ayudaron a sentirme seguro al volante. Muy recomendados."</p>
+          <p class="fw-bold mb-0">- Luis M.</p>
+        </div>
+      </section>
+
     </main>
-
-    <!--02-06-2025 Footer -->
     <footer>
       <p>&copy; 2025 Start & Go. Todos los derechos reservados.</p>
     </footer>
+
   </div>
 
-<!--Hoja vinculada 02-06-2025-->
-<script src="js/site.js"></script>
+  <script src="js/site.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+
 </body>
 </html>
+

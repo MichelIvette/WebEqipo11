@@ -6,7 +6,7 @@
 - Mostrar y ocultar contraseña (agregado de LINK  de usuario y contraseña(span), JS, style)
 - img circulo sobre el form 
 - Cambio de Recuérdame por Mantener la sesión iniciada
-- cambio de color:  #0b3651,presionar botones: #0b3651
+- cambio de color:  #0b3651,presionar botones:#052234
 - Iconos de las páginas   
 
 ##[02-06-2025] Monroy: dentro.php
