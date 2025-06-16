@@ -430,9 +430,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["eliminar"])) {
         <div class="d-flex align-items-start mb-3">
           <i class="bi bi-info-circle-fill text-primary fs-4 me-2 mt-1"></i>
           <div>
-            <p class="fw-semibold mb-1">¿Estás seguro de realizar esta acción?</p>
-            <p class="mb-1">Se eliminarán los siguientes elementos permanentemente:</p>
-
+            <p class="fw-semibold mb-1">¿Estás seguro de querer eliminar los registros seleccionados?</p>
+            
           </div>
         </div>
         <div class="alert alert-warning d-flex align-items-center p-2 mb-0" role="alert">
