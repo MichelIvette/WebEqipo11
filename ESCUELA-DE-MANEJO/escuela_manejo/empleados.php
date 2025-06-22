@@ -121,6 +121,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["eliminar"])) {
       <div class="welcome">
         <h2>Empleados</h2>
 
+
+
+        
         <div class="contenedor-scroll">
           <form method="POST" id="formEliminar">
             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -151,7 +154,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["eliminar"])) {
                 <tr>
                   <th></th>
                   <th>RFC</th>
-                  <th>Nombre</th>
+                  <th>Nombre(s)</th>
                   <th>Apellido paterno</th>
                   <th>Apellido materno</th>
                   <th>Puesto</th>
@@ -208,16 +211,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["eliminar"])) {
               <input type="text" class="form-control" name="rfc" required readonly>
             </div>
             <div class="col-md-4">
-              <label for="nombre" class="form-label">Nombre</label>
-              <input type="text" class="form-control" name="nombre" required>
+              <label for="nombre" class="form-label">Nombre(s)</label>
+              <input type="text" class="form-control" name="nombre" required
+                pattern="^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]{2,}$"
+                title="Solo letras y espacios (mínimo 2 caracteres)">
             </div>
             <div class="col-md-4">
               <label for="ap" class="form-label">Apellido Paterno</label>
-              <input type="text" class="form-control" name="ap" required>
+              <input type="text" class="form-control" name="ap" required
+                    pattern="^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]{2,}$"
+                title="Solo letras y espacios (mínimo 2 caracteres)">
             </div>
             <div class="col-md-4">
               <label for="am" class="form-label">Apellido Materno</label>
-              <input type="text" class="form-control" name="am" required>
+              <input type="text" class="form-control" name="am" required
+                  pattern="^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]{2,}$"
+                  title="Solo letras y espacios (mínimo 2 caracteres)">
             </div>
             <div class="col-md-4">
               <label for="puesto" class="form-label">Puesto</label>
@@ -273,13 +282,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["eliminar"])) {
                 <option value="FEMENINO">Femenino</option>
               </select>
             </div>
-            <div class="col-md-4">
+           <div class="col-md-4">
               <label for="fecha_nac" class="form-label">Fecha de Nacimiento</label>
-              <input type="date" class="form-control" name="fecha_nac" required>
+              <input type="date" 
+                  class="form-control" 
+                  name="fecha_nac" 
+                  value="<?= htmlspecialchars($_POST['fecha_nac'] ?? '') ?>" 
+                  min="1900-01-01"                     
+                  max="<?= date('Y-m-d') ?>"             
+                  required
+                  oninvalid="this.setCustomValidity('Verifique, la fecha introducida no es correcta')"
+                  oninput="this.setCustomValidity('')">
             </div>
             <div class="col-md-4">
               <label for="tel" class="form-label">Teléfono</label>
-              <input type="tel" class="form-control" name="tel" required>
+              <input type="text" class="form-control" name="tel"
+                  value="<?=htmlspecialchars($_POST['tel'] ?? '')?>"
+                  required
+                  pattern="^\d{10}$"
+                  maxlength="10"
+                  title="Debe contener exactamente 10 dígitos numéricos">
             </div>
             <div class="col-md-4">
               <label for="calle" class="form-label">Calle</label>
@@ -332,11 +354,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["eliminar"])) {
           <?php endif; ?>
 
           <!-- Campos del formulario -->
-          <div class="col-md-6"><label class="form-label">RFC</label><input type="text" class="form-control" name="rfc" required></div>
-          <div class="col-md-6"><label class="form-label">Nombre</label><input type="text" class="form-control" name="nombre" required></div>
-          <div class="col-md-6"><label class="form-label">Apellido Paterno</label><input type="text" class="form-control" name="ap" required></div>
-          <div class="col-md-6"><label class="form-label">Apellido Materno</label><input type="text" class="form-control" name="am" required></div>
-          <div class="col-md-6"><label class="form-label">Puesto</label><input type="text" class="form-control" name="puesto" required></div>
+          <div class="col-md-6">
+            <label class="form-label">RFC</label>
+            <input type="text" class="form-control" name="rfc" required
+            pattern="^[A-ZÑ&]{4}\d{6}[A-Z0-9]{3}$"
+            title="Debe contener 4 letras, 6 números (fecha) y 3 caracteres alfanuméricos (homoclave)">
+          </div>
+          <div class="col-md-6"><label class="form-label">Nombre(s)</label><input type="text" class="form-control" name="nombre" required
+          pattern="^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]{2,}$"
+          title="Solo letras y espacios (mínimo 2 caracteres)"></div>
+
+          <div class="col-md-6"><label class="form-label">Apellido Paterno</label><input type="text" class="form-control" name="ap" required pattern="^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]{2,}$"
+          title="Solo letras y espacios (mínimo 2 caracteres)">
+          </div>
+          <div class="col-md-6"><label class="form-label">Apellido Materno</label><input type="text" class="form-control" name="am" required
+          pattern="^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]{2,}$"
+          title="Solo letras y espacios (mínimo 2 caracteres)">
+          </div>
+          <div class="col-md-6"><label class="form-label">Puesto</label><input type="text" class="form-control" name="puesto" required
+          pattern="^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]{2,}$"
+          title="Solo se admiten caracteres del a-z"></div>
           <div class="col-md-6">
             <label class="form-label">Turno</label>
             <select name="turno" class="form-select" required>
@@ -385,8 +422,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["eliminar"])) {
               <option value="FEMENINO" <?php if (($_POST['sexo'] ?? '') === 'FEMENINO') echo 'selected'; ?>>FEMENINO</option>
             </select>
           </div>
-          <div class="col-md-6"><label class="form-label">Fecha de nacimiento</label><input type="date" class="form-control" name="fecha_nac" value="<?=htmlspecialchars($_POST['fecha_nac'] ?? '')?>" required></div>
-          <div class="col-md-6"><label class="form-label">Teléfono personal</label><input type="text" class="form-control" name="tel" value="<?=htmlspecialchars($_POST['tel'] ?? '')?>" required></div>
+          <div class="col-md-6">
+              <label class="form-label">Fecha de nacimiento</label>
+              <input 
+                  type="date" 
+                  class="form-control" 
+                  name="fecha_nac" 
+                  value="<?= htmlspecialchars($_POST['fecha_nac'] ?? '') ?>" 
+                  min="1900-01-01"                     
+                  max="<?= date('Y-m-d') ?>"             
+                  required
+                  oninvalid="this.setCustomValidity('Verifique, La fecha introducida no es correcta')"
+                  oninput="this.setCustomValidity('')">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Teléfono personal</label>
+            <input type="text" class="form-control" name="tel"
+                  value="<?=htmlspecialchars($_POST['tel'] ?? '')?>"
+                  required
+                  pattern="^\d{10}$"
+                  maxlength="10"
+                  title="Debe contener exactamente 10 dígitos numéricos">
+          </div>
           <div class="col-md-6"><label class="form-label">Calle</label><input type="text" class="form-control" name="calle" value="<?=htmlspecialchars($_POST['calle'] ?? '')?>" required></div>
           <div class="col-md-3"><label class="form-label">Número</label><input type="text" class="form-control" name="numero" value="<?=htmlspecialchars($_POST['numero'] ?? '')?>" required></div>
           <div class="col-md-6"><label class="form-label">Colonia</label><input type="text" class="form-control" name="colonia" value="<?=htmlspecialchars($_POST['colonia'] ?? '')?>" required></div>
