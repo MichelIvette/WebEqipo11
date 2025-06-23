@@ -7,14 +7,10 @@ if (!isset($_SESSION["activa"])) {
 $usuario = $_SESSION["usuario"];
 
 // CONEXIÓN A LA BASE DE DATOS
-try {
-    $pdo = new PDO("mysql:host=localhost;dbname=prueba", "root", "53304917Mm$");
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Error de conexión: " . $e->getMessage());
-}
+require_once 'conexion.php';
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -26,40 +22,7 @@ try {
   <link rel="icon" href="img/icono.png" type="image/png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   
-  <style>
-    /* Estilos para el sidebar y menú hamburguesa */
-    .sidebar {
-      width: 250px;
-      height: 100vh;
-      position: fixed;
-      left: -250px;
-      top: 0;
-      background: #343a40;
-      transition: all 0.3s;
-      z-index: 1000;
-      padding-top: 60px;
-    }
-    .sidebar.active {
-      left: 0;
-    }
-    .main-content {
-      transition: all 0.3s;
-      margin-left: 0;
-    }
-    .main-content.sidebar-open {
-      margin-left: 250px;
-    }
-    .menu-btn {
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      color: white;
-      cursor: pointer;
-    }
-    .no-scroll {
-      overflow: hidden;
-    }
-  </style>
+  
   <link rel="stylesheet" href="css/site.css">
 </head>
 <body>
@@ -95,7 +58,7 @@ try {
           </div>
 
           <div class="contenedor-scroll">
-            <table class="table table-striped tabla-profesional">
+            <table border="1" class="table table-striped tabla-profesional">
               <thead class="table-dark">
                 <tr>
                   <th></th>
@@ -111,6 +74,7 @@ try {
                   <th>Alcaldía</th>
                   <th>Permiso</th>
                   <th>Observaciones</th>
+                  <th>Fecha de pago</th>
                   <th>Total Pago</th>
                   <th>Forma de Pago</th>
                   <th>Reembolso</th>
@@ -137,6 +101,7 @@ try {
                         echo "<td>".htmlspecialchars($row['ALCALDIA'] ?? '')."</td>";
                         echo "<td>".htmlspecialchars($row['PERMISO'] ?? '')."</td>";
                         echo "<td>".htmlspecialchars($row['OBSERVACIONES'] ?? '')."</td>";
+                        echo "<td>".htmlspecialchars($row['FECHA_PAGO'] ?? '')."</td>";
                         echo "<td>".htmlspecialchars($row['TOTAL_PAGO'] ?? '')."</td>";
                         echo "<td>".htmlspecialchars($row['FORMA_PAGO'] ?? '')."</td>";
                         echo "<td>".htmlspecialchars($row['REEMBOLSO'] ?? '')."</td>";
@@ -209,7 +174,11 @@ try {
                 <label class="form-label">Alcaldía</label>
                 <input type="text" class="form-control" name="alcaldia" required>
               </div>
-              <div class="col-md-6">
+                <div class="col-md-6">
+                  <label class="form-label">Fecha de Pago</label>
+                  <input type="date" class="form-control" name="fecha_pago">
+                </div>
+               <div class="col-md-6">
                 <label class="form-label">Total Pago</label>
                 <input type="number" class="form-control" name="total_pago" step="0.01" min="0">
               </div>
@@ -299,6 +268,10 @@ try {
                 <label class="form-label">Alcaldía</label>
                 <input type="text" class="form-control" name="alcaldia" required>
               </div>
+                <div class="col-md-6">
+                  <label class="form-label">Fecha de Pago</label>
+                  <input type="date" class="form-control" name="fecha_pago">
+                </div>
               <div class="col-md-6">
                 <label class="form-label">Total Pago</label>
                 <input type="number" class="form-control" name="total_pago" step="0.01" min="0">
@@ -391,11 +364,13 @@ try {
           modal.querySelector('input[name="alcaldia"]').value = celdas[10].textContent;
           modal.querySelector('input[name="permiso"]').value = celdas[11].textContent;
           modal.querySelector('textarea[name="observaciones"]').value = celdas[12].textContent;
-          modal.querySelector('input[name="total_pago"]').value = celdas[13].textContent;
-          modal.querySelector('input[name="forma_pago"]').value = celdas[14].textContent;
-          modal.querySelector('input[name="reembolso"]').value = celdas[15].textContent;
-          modal.querySelector('input[name="usuario"]').value = celdas[16].textContent;
-          modal.querySelector('input[name="dominio"]').value = celdas[17].textContent;
+          modal.querySelector('input[name="fecha_pago"]').value = celdas[13].textContent;
+          modal.querySelector('input[name="total_pago"]').value = celdas[14].textContent;
+          modal.querySelector('input[name="forma_pago"]').value = celdas[15].textContent;
+          modal.querySelector('input[name="reembolso"]').value = celdas[16].textContent;
+          modal.querySelector('input[name="usuario"]').value = celdas[17].textContent;
+          modal.querySelector('input[name="dominio"]').value = celdas[18].textContent;
+
           
           // Campo oculto para RFC original
           modal.querySelector('input[name="rfc_original"]').value = celdas[1].textContent;

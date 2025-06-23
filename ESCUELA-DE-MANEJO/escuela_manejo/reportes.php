@@ -5,13 +5,8 @@ if (!isset($_SESSION["activa"])) {
     exit;
 }
 
-// Conexión a la base de datos
-try {
-    $pdo = new PDO("mysql:host=localhost;dbname=prueba", "root", "53304917Mm$");
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Error de conexión: " . $e->getMessage());
-}
+// CONEXIÓN A LA BASE DE DATOS
+require_once 'conexion.php';
 
 // Obtener datos para los gráficos
 function obtenerDatosClasesPorDia($pdo, $fechaInicio, $fechaFin) {
@@ -61,48 +56,7 @@ $paginaActual = basename($_SERVER['PHP_SELF']);
   <link rel="icon" href="img/icono.png" type="image/png"/>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   
-  <style>
-    body {
-      padding-top: 60px;
-    }
-    
-    .sidebar {
-      width: 250px;
-      height: calc(100vh - 60px);
-      position: fixed;
-      left: -250px;
-      top: 60px;
-      background: #343a40;
-      transition: all 0.3s;
-      z-index: 1000;
-      overflow-y: auto;
-    }
-    
-    .sidebar.active {
-      left: 0;
-    }
-    
-    .main-content {
-      margin-left: 0;
-      transition: all 0.3s;
-      padding: 20px;
-    }
-    
-    @media (min-width: 768px) {
-      .sidebar {
-        left: 0;
-      }
-      .main-content {
-        margin-left: 250px;
-      }
-    }
-    
-    .chart-container {
-      position: relative;
-      height: 300px;
-      margin-bottom: 20px;
-    }
-  </style>
+
 </head>
 <body>
   <?php include 'menu.php'; ?>
@@ -111,10 +65,28 @@ $paginaActual = basename($_SERVER['PHP_SELF']);
     <div class="container-fluid">
       <h2 class="mb-4">Reportes de Clases y Exámenes</h2>
 
+      <!-- Formulario para seleccionar mes y generar estado de cuenta -->
+<div class="card shadow mb-4">
+  <div class="card-body">
+    <form action="estado_cuenta.php" method="GET" class="row g-3 align-items-end">
+      <div class="col-md-4">
+        <label for="mes" class="form-label">Selecciona el Mes</label>
+        <input type="month" id="mes" name="mes" class="form-control" required>
+      </div>
+      <div class="col-md-4">
+        <button type="submit" class="btn btn-success w-100">
+          <i class="fas fa-file-invoice-dollar me-2"></i> Generar Estado de Cuenta
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
       <!-- Filtros simplificados -->
       <div class="card shadow mb-4">
         <div class="card-body">
-          <form id="filtrosReporte" class="row g-3">
+          <form id="filtrosReporte" class="row g-3" method="POST">
             <div class="col-md-4">
               <label for="fechaInicio" class="form-label">Fecha Inicio</label>
               <input type="date" id="fechaInicio" name="fechaInicio" class="form-control" 
@@ -126,7 +98,7 @@ $paginaActual = basename($_SERVER['PHP_SELF']);
                      value="<?= htmlspecialchars($fechaFin) ?>">
             </div>
             <div class="col-md-4 d-flex align-items-end">
-              <button type="submit" class="btn btn-primary w-100">
+              <button type="submit" class="btn btn-secondary w-100">
                 <i class="fas fa-filter me-2"></i> Filtrar
               </button>
             </div>
@@ -134,11 +106,11 @@ $paginaActual = basename($_SERVER['PHP_SELF']);
         </div>
       </div>
 
-      <!-- Gráficos principales -->
+      <!-- Gráficos -->
       <div class="row">
         <div class="col-md-6 mb-4">
           <div class="card shadow h-100">
-            <div class="card-header bg-primary text-white">
+            <div class="card-header encabezado-custom">
               <h5 class="mb-0"><i class="fas fa-calendar-alt me-2"></i>Clases por Día</h5>
             </div>
             <div class="card-body">
@@ -150,7 +122,7 @@ $paginaActual = basename($_SERVER['PHP_SELF']);
         </div>
         <div class="col-md-6 mb-4">
           <div class="card shadow h-100">
-            <div class="card-header bg-primary text-white">
+            <div class="card-header encabezado-custom">
               <h5 class="mb-0"><i class="fas fa-chart-pie me-2"></i>Resultados de Exámenes</h5>
             </div>
             <div class="card-body">
@@ -162,9 +134,9 @@ $paginaActual = basename($_SERVER['PHP_SELF']);
         </div>
       </div>
 
-      <!-- Tabla de instructores -->
+      <!-- Tabla -->
       <div class="card shadow mb-4">
-        <div class="card-header bg-primary text-white">
+        <div class="card-header encabezado-custom">
           <h5 class="mb-0"><i class="fas fa-user-tie me-2"></i>Instructores con Más Clases</h5>
         </div>
         <div class="card-body">
@@ -303,5 +275,10 @@ $paginaActual = basename($_SERVER['PHP_SELF']);
       });
     });
   </script>
+
+   <footer>
+      <p>&copy; 2025 Start & Go. Todos los derechos reservados.</p>
+    </footer>
+    
 </body>
 </html>

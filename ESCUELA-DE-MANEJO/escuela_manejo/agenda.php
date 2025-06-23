@@ -7,12 +7,7 @@ if (!isset($_SESSION["activa"])) {
 $usuario = $_SESSION["usuario"];
 
 // CONEXIÓN A LA BASE DE DATOS
-try {
-    $pdo = new PDO("mysql:host=localhost;dbname=prueba", "root", "53304917Mm$");
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Error de conexión: " . $e->getMessage());
-}
+require_once 'conexion.php';
 
 // Procesar eliminación
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["eliminar"])) {
@@ -43,41 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["eliminar"])) {
   <link rel="icon" href="img/icono.png" type="image/png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   
-  <style>
-    
-    /* Estilos para el sidebar y menú hamburguesa */
-    .sidebar {
-      width: 250px;
-      height: 100vh;
-      position: fixed;
-      left: -250px;
-      top: 0;
-      background: #343a40;
-      transition: all 0.3s;
-      z-index: 1000;
-      padding-top: 60px;
-    }
-    .sidebar.active {
-      left: 0;
-    }
-    .main-content {
-      transition: all 0.3s;
-      margin-left: 0;
-    }
-    .main-content.sidebar-open {
-      margin-left: 250px;
-    }
-    .menu-btn {
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      color: white;
-      cursor: pointer;
-    }
-    .no-scroll {
-      overflow: hidden;
-    }
-  </style>
+  
   <link rel="stylesheet" href="css/site.css">
 </head>
 <body>

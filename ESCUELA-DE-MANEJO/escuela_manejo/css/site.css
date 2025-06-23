@@ -15,15 +15,11 @@ body.no-scroll {
     overflow: hidden;
 }
 
-.wrapper {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
 
+
+/* Encabezado */
 header {
     background-color: #ffffff;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     padding: 15px 20px;
     display: flex;
     justify-content: space-between;
@@ -35,9 +31,12 @@ header {
 }
 
 .logo-container {
-    width: 180px;
+    width: 200px;
 }
+/*--------------------------------*/
 
+
+/*Botón del lado superior derecho */
 .menu-btn,
 .profile-btn {
     background: none;
@@ -57,6 +56,14 @@ header {
     align-items: center;
     justify-content: center;
 }
+/*------------------------------*/
+
+/* LOS ICONOS DE LAS ITEMS DE DENTRO */
+ .text-primary {
+      color: #0b3651 !important;
+    }
+/* --------------------------------------------------*/
+
 #sidebar {
     overflow-y: auto; /* Habilita scroll solo en el sidebar */
     max-height: 100vh; /* Limita altura para activar scroll */
@@ -121,6 +128,8 @@ header {
   text-decoration: none;
 }
 
+
+/* Botón Cerrar sesión */
 .sidebar-menu .salir i {
   color: white;
 
@@ -130,6 +139,8 @@ header {
   background-color: #902013; 
   cursor: pointer;
 }
+/*-----------------------------*/
+
 
 .main-content {
     flex: 1;
@@ -137,8 +148,6 @@ header {
     margin-top: 70px;
     transition: transform 0.3s ease;
 }
-
-
 
 .main-content.sidebar-open {
     margin-left: 250px;
@@ -230,11 +239,6 @@ footer {
   max-height: 400px;
   overflow: hidden;
 }
-/* Compensar el espacio de la imagen
-.main-content.sidebar-open > .hero:first-child {
-  margin-left: -270px; 
-  width: calc(100% + 290px); 
-}*/
 
 .hero-img {
   width: 100%;
@@ -250,17 +254,6 @@ footer {
   transform: translate(-50%, -50%);
   color: white;
   text-align: center;
-}
-
-.hero-text h2 {
-  font-size: 3rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
-
-.hero-text p {
-  font-size: 1.25rem;
-  margin-bottom: 1rem;
 }
 
 /*Mensaje de bienvenido al sistema*/
@@ -279,25 +272,6 @@ footer {
   border: 1px solid #0b3651;
 
   transition: opacity 0.5s ease;
-}
-
-
-/*Colores de botón incribete*/
-.btn-secondary {
-  background-color: #ff5722;
-  border-color: #ff5722;
-}
-.btn-secondary:hover {
-  background-color: #a93b19;
-  border-color: #a93b19;
-}
-
-.btn-secondary:active,
-.btn-secondary:focus {
-  background-color: #a93b19 !important;
-  border-color: #a93b19 !important;
-  color: white !important;
-  box-shadow: none !important;
 }
 
 /*Agregar empleados boton*/
@@ -322,7 +296,6 @@ footer {
   border-color: #28a745;
 }
 
-
 .fab-eliminar {
   position: fixed; /* Posicionamiento flotante */
   top: 450px;        /* Separación desde la parte superior */
@@ -344,9 +317,6 @@ footer {
   background-color: #0b3651 !important;
   color: white !important;
 }
-
-
-
 
 .fab-modificar {
   position: fixed; /* Posicionamiento flotante */
@@ -378,8 +348,6 @@ footer {
   box-shadow: inset 0 3px 8px rgba(255, 140, 0, 0.6) !important;
 }
 
-
-
 .bg-warning{
    background-color: #0b3651 !important;
    color: white;
@@ -390,30 +358,32 @@ footer {
   text-align: center!important;
 }
 
+/* BOTONES DE GUARGAR Y CANCELAR DE LOS FORMS */
 .btn-tertiary {
-  background-color: #202424 !important; 
-  border-color: #202424 !important;
+  background-color: #4f8e3b !important; 
+  border-color: #4f8e3b !important;
   color:white;
 }
 
 .btn-tertiary:hover {
-  background-color: #0b3651 !important;;
-  border-color: #0b3651 !important;;
+  background-color: #0b510f !important;;
+  border-color: #0b510f !important;;
   color:white !important;;
 }
 
 .btn-warning {
-  background-color: #b22e1d !important; /* Tu color personalizado */
-  border-color: #b22e1d  !important;
+  background-color: #bc1b06 !important; 
+  border-color: #bc1b06  !important;
   color:white;
   
 }
 
 .btn-warning:hover {
-  background-color: #a12514 !important;
-  border-color: #a12514 !important;
+  background-color: #701c11 !important;
+  border-color: #701c11 !important;
   color:white;
 }
+/* ---------------------------------------------------------*/
 
 /*X blanca de los registros*/
 .btn-close {
@@ -429,3 +399,146 @@ footer {
 #encabezado{
   background-color: #0b3651 !important;;
 }
+/*-------------REPORTE-------------------------------*/
+
+/* BOTÓN FILTAR DE REPORTE */
+.btn-secondary {
+  background-color: #0b3651;
+  border-color: #0b3651;
+}
+
+ .btn-secondary:hover {
+  background-color: #0b3651;
+  border-color: #0b3651;
+}
+/* ENCABEZADOS DE LAS GRÁFICAS */
+.encabezado-custom {
+  background-color: #0b3651; /* Azul oscuro personalizado */
+  color: white;
+  font-weight: bold;
+  padding: 12px 20px;
+  border-bottom: 2px solid #063144;
+}
+
+/* FONDO DE LAS GRÁFICAS */
+.chart-container {
+      position: relative;
+      height: 300px;
+      margin-bottom: 20px;
+    }
+/* --------------------------------------------------------------------------------------------------------------------*/
+/*TEMA OSCURO*/
+body.dark-mode {
+  background-color: #121212;
+  color: #f5f5f5;
+}
+
+.dark-mode .welcome {
+    text-align: center;
+    margin-top: 10px;
+    color: white;
+}
+
+.dark-mode header,
+.dark-mode footer {
+  background-color: #1e1e1e;
+  color: #f5f5f5;
+}
+
+.dark-mode .sidebar {
+  background-color: #1e1e1e;
+  color: #f5f5f5;
+}
+
+.dark-mode .sidebar-menu li a {
+  color: #f5f5f5;
+}
+
+.dark-mode .sidebar-menu li.active {
+  background-color: #0b3651;
+}
+
+.dark-mode .tabla-profesional {
+  background-color: #1e1e1e;
+  color: #f5f5f5;
+}
+
+.dark-mode .tabla-profesional thead {
+  background-color: #0b3651;
+}
+
+.dark-mode .tabla-profesional tbody tr:hover {
+  background-color: #2a2a2a;
+}
+
+.dark-mode.profile-btn {
+  background-color: #444;
+  color: white;
+}
+/*---------------------------*/
+    /* Modo oscuro general */
+    body.dark-mode {
+      background-color: #121212;
+      color: #e0e0e0;
+    }
+ 
+    body.dark-mode main.main-content {
+      background-color: #1e1e1e;
+    }
+
+    body.dark-mode .alert-success {
+      background-color: #2e7d32;
+      color: #c8f7c5;
+      border-color: #1b4d1b;
+    }
+
+    body.dark-mode .btn-close {
+      filter: invert(1);
+    }
+
+    body.dark-mode section.bg-light {
+      background-color: #1e1e1e !important;
+      color: #fbf6f6 !important;
+    }
+
+    body.dark-mode .service-card {
+      background-color: #1e1e1e;
+      color: #fbf6f6;
+      border: 1px solid #1e1e1e;
+    }
+
+   body.dark-mode .text-primary {
+      color: #f7f9fa !important;
+    }
+
+    body.dark-mode footer {
+      background-color: #1a1a1a;
+      color: #fbf6f6;
+    }
+/*------------------------------------------*/
+    :root {
+  /* Modo claro */
+  --menu-btn-color: rgb(17, 16, 16);
+  --menu-btn-bg: transparent;
+}
+
+body.dark-mode {
+  /* Modo oscuro */
+  --menu-btn-color: #f4eaea; 
+  --menu-btn-bg: transparent;
+}
+
+.menu-btn {
+  color: var(--menu-btn-color);
+  background-color: var(--menu-btn-bg);
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.menu-btn i {
+  color: var(--menu-btn-color);
+}
+
+
+

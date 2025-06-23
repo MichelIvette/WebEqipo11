@@ -5,14 +5,8 @@ if (!isset($_SESSION["activa"])) {
     exit;
 }
 
-try {
-    $pdo = new PDO("mysql:host=localhost;dbname=prueba", "root", "53304917Mm$");
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    $_SESSION["mensaje"] = "<div class='alert alert-danger m-3'>Error en la conexión: " . $e->getMessage() . "</div>";
-    header("Location: empleados.php");
-    exit;
-}
+// CONEXIÓN A LA BASE DE DATOS
+require_once 'conexion.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["rfc"])) {
     $rfc = $_POST["rfc"];

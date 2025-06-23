@@ -5,9 +5,10 @@ if (!isset($_SESSION["activa"])) {
     exit;
 }
 
+// CONEXIÓN A LA BASE DE DATOS
+require_once 'conexion.php';
+
 try {
-    $pdo = new PDO("mysql:host=localhost;dbname=prueba", "root", "53304917Mm$");
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt = $pdo->prepare("UPDATE AGENDA SET 

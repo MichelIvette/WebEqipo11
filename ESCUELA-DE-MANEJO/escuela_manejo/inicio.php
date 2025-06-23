@@ -3,7 +3,8 @@ session_start();
 
 function esValida($usuario) {
     try {
-        $pdo = new PDO("mysql:host=localhost;dbname=prueba", "root", "53304917Mm$");
+        // CONEXIÓN A LA BASE DE DATOS
+        require_once 'conexion.php';
         $stmt = $pdo->prepare("SELECT COUNT(*) FROM usuario WHERE usuario_nombre = :usuario");
         $stmt->bindParam(':usuario', $usuario, PDO::PARAM_STR);
         $stmt->execute();

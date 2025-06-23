@@ -7,7 +7,8 @@ if (isset($_SESSION["activa"]) && $_SESSION["activa"] === true) {
 
 function validaLogin($nombre, $clave) {
     try {
-        $pdo = new PDO("mysql:host=localhost;dbname=prueba", "root", "53304917Mm$");
+        // CONEXIÓN A LA BASE DE DATOS
+        require_once 'conexion.php';
         $stmt = $pdo->prepare("SELECT * FROM usuario WHERE usuario_nombre = :nombre");
         $stmt->bindParam(':nombre', $nombre, PDO::PARAM_STR);
         $stmt->execute();

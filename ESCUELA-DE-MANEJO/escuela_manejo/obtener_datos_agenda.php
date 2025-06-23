@@ -5,12 +5,13 @@ if (!isset($_SESSION["activa"])) {
     exit;
 }
 
+// CONEXIÓN A LA BASE DE DATOS
+require_once 'conexion.php';
+
 header('Content-Type: application/json');
 
 try {
-    $pdo = new PDO("mysql:host=localhost;dbname=prueba", "root", "53304917Mm$");
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
+    
     $fechaInicio = $_POST['fechaInicio'] ?? date('Y-m-d', strtotime('-30 days'));
     $fechaFin = $_POST['fechaFin'] ?? date('Y-m-d');
     $tipoReporte = $_POST['tipoReporte'] ?? 'actividades';

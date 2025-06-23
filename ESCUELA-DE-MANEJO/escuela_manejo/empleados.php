@@ -6,13 +6,8 @@ if (!isset($_SESSION["activa"])) {
 }
 $usuario = $_SESSION["usuario"];
 
-// Conexión a la base de datos
-try {
-    $pdo = new PDO("mysql:host=localhost;dbname=prueba", "root", "53304917Mm$");
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Error de conexión: " . $e->getMessage());
-}
+// CONEXIÓN A LA BASE DE DATOS
+require_once 'conexion.php';
 
 // Variables para mensajes
 $errorMensaje = "";
@@ -120,10 +115,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["eliminar"])) {
 
       <div class="welcome">
         <h2>Empleados</h2>
-
-
-
-        
         <div class="contenedor-scroll">
           <form method="POST" id="formEliminar">
             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -147,8 +138,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["eliminar"])) {
                 </div>
 
             <!-------------------------------------------------------------->
-
-
             <table border="1" class="table table-striped tabla-profesional">
               <thead class="table-dark">
                 <tr>
@@ -510,6 +499,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["eliminar"])) {
     </div>
   </div>
 </div>
-
 </body>
 </html>

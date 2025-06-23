@@ -6,12 +6,8 @@ if (!isset($_SESSION["activa"])) {
 }
 
 // CONEXIÓN A LA BASE DE DATOS
-try {
-    $pdo = new PDO("mysql:host=localhost;dbname=prueba", "root", "53304917Mm$");
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Error de conexión: " . $e->getMessage());
-}
+require_once 'conexion.php';
+
 
 // Procesar modificación de alumno
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

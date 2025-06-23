@@ -6,14 +6,7 @@ if (!isset($_SESSION["activa"])) {
 }
 
 // CONEXIÓN A LA BASE DE DATOS
-try {
-    $pdo = new PDO("mysql:host=localhost;dbname=prueba", "root", "53304917Mm$");
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    $_SESSION['mensaje'] = "<div class='alert alert-danger'>Error de conexión: " . $e->getMessage() . "</div>";
-    header("Location: alumnos.php");
-    exit;
-}
+require_once 'conexion.php';
 
 // Procesar eliminación de alumnos
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["eliminar"])) {

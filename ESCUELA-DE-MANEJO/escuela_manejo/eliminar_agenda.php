@@ -13,8 +13,8 @@ function mostrarError($mensaje) {
 }
 
 try {
-    $pdo = new PDO("mysql:host=localhost;dbname=prueba", "root", "53304917Mm$");
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // CONEXIÓN A LA BASE DE DATOS
+    require_once 'conexion.php';
 
     if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["seleccionados"])) {
         
