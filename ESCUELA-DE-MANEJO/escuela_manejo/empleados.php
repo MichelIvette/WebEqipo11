@@ -86,7 +86,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["eliminar"])) {
   <link rel="stylesheet" href="css/site.css"/>
 </head>
 <body>
-  <div class="wrapper">
     <?php include 'menu.php'; ?>
     <main class="main-content" id="mainContent">
       
