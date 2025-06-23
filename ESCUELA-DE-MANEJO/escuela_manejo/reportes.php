@@ -74,7 +74,7 @@ $paginaActual = basename($_SERVER['PHP_SELF']);
         <input type="month" id="mes" name="mes" class="form-control" required>
       </div>
       <div class="col-md-4">
-        <button type="submit" class="btn-anaranjado btn-success w-100">
+        <button type="submit" class="btn btn-secondary w-100">
           <i class="fas fa-file-invoice-dollar me-2"></i> Generar Estado de Cuenta
         </button>
       </div>
@@ -283,75 +283,7 @@ $paginaActual = basename($_SERVER['PHP_SELF']);
    <footer>
       <p>&copy; 2025 Start & Go. Todos los derechos reservados.</p>
     </footer>
-    <style>
-      body.dark-mode .card-header {
-  background-color: #2a2a2a;
-  color: #ffffff;
-  border-bottom: 1px solid #444;
-}
 
-body.dark-mode .encabezado-custom {
-  background-color: #2a2a2a;
-  color: #ffffff;
-}
-
-  body.dark-mode {
-    background-color: #121212;
-    color: #e0e0e0;
-  }
-
-  body.dark-mode .card,
-  body.dark-mode .card-body,
-  body.dark-mode .card-header,
-  body.dark-mode .form-control,
-  body.dark-mode .form-select,
-  body.dark-mode .table,
-  body.dark-mode .modal-body {
-    background-color: #1e1e1e;
-    color: #fff;
-    border-color: #333;
-  }
-
-  body.dark-mode input,
-  body.dark-mode select,
-  body.dark-mode option {
-    background-color: #2a2a2a;
-    color: #fff;
-  }
-
-  body.dark-mode th,
-  body.dark-mode td {
-    color: #fff;
-  }
-
-  body.dark-mode .table-striped tbody tr:nth-of-type(odd) {
-    background-color: #2c2c2c;
-  }
-
-  body.dark-mode .btn-anaranjado {
-    background-color: #ff5e2e;
-    border-color: #ff5e2e;
-  }
-
-  body.dark-mode footer {
-    background-color: #1a1a1a;
-    color: #ccc;
-  }
-
-  body.dark-mode .form-label {
-    color: #fff;
-  }
-body.dark-mode th {
-  background-color: #2a2a2a !important;
-  color: #ffffff !important;
-  border-color: #444 !important;
-}
-body.dark-mode td {
-  background-color: #2a2a2a !important;
-  color: #ffffff !important;
-  border-color: #444 !important;
-}
-</style>
 
 </body>
 </html>

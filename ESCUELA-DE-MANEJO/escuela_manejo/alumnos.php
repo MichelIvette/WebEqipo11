@@ -53,7 +53,7 @@ require_once 'conexion.php';
             </button>
           </div>
 
-          <div class="mb-3">
+          <div class="esp mb-3">
             <input type="text" id="busquedaTabla" class="form-control" placeholder="Buscar en la tabla...">
           </div>
 
