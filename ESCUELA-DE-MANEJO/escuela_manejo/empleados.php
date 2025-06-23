@@ -311,8 +311,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["eliminar"])) {
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-tertiary">Guardar cambios</button>
+          
           <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-tertiary">Guardar cambios</button>
         </div>
       </form>
     </div>
@@ -441,8 +442,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["eliminar"])) {
         </div>
 
         <div class="modal-footer">
-          <button type="submit" name="agregar" class="btn btn-tertiary">Guardar</button>
+          
           <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" name="agregar" class="btn btn-tertiary">Guardar</button>
         </div>
       </form>
     </div>

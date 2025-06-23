@@ -13,7 +13,8 @@ $paginaActual = basename($_SERVER['PHP_SELF']);
 
 <header>
   <button class="menu-btn" id="menuToggle"><i class="fas fa-bars" title="Menú principal"></i></button>
-  <img src="img/Logo_rectangular.jpg" class="logo-container" alt="Logo de la escuela de manejo">
+  <img src="img/Logo_rectangular.jpg" class="logo-container" alt="Logo claro" id="logoClaro">
+<img src="img/Logo_rectangular_oscuro.png" class="logo-container" alt="Logo oscuro" id="logoOscuro" style="display:none;">
   <div class="header-icons">
     <button class="profile-btn">AD</button>
   </div>
@@ -78,17 +79,34 @@ $paginaActual = basename($_SERVER['PHP_SELF']);
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    // Aplicar tema guardado
-    const theme = localStorage.getItem("theme");
-    if (theme === "dark") {
+    const logoClaro = document.getElementById("logoClaro");
+    const logoOscuro = document.getElementById("logoOscuro");
+    const btnToggle = document.getElementById("toggle-theme");
+
+    // 1. Aplicar tema guardado
+    const temaGuardado = localStorage.getItem("theme");
+    if (temaGuardado === "dark") {
       document.body.classList.add("dark-mode");
+      logoClaro.style.display = "none";
+      logoOscuro.style.display = "block";
+    } else {
+      document.body.classList.remove("dark-mode");
+      logoClaro.style.display = "block";
+      logoOscuro.style.display = "none";
     }
 
-    // Cambiar tema con click
-    document.getElementById("toggle-theme").addEventListener("click", (e) => {
+    // 2. Al hacer clic en "Cambiar tema"
+    btnToggle.addEventListener("click", (e) => {
       e.preventDefault();
-      document.body.classList.toggle("dark-mode");
-      localStorage.setItem("theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
+      const isDark = document.body.classList.toggle("dark-mode");
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+
+      // Mostrar el logo correspondiente
+      logoClaro.style.display = isDark ? "none" : "block";
+      logoOscuro.style.display = isDark ? "block" : "none";
     });
   });
 </script>
+
+
+

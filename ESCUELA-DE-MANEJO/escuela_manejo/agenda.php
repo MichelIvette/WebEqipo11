@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["eliminar"])) {
             <button type="button" class="btn btn-success fab-agregar" data-bs-toggle="modal" data-bs-target="#modalAgregarAgenda" title="Agregar registro">
               <i class="fas fa-plus"></i>
             </button>
-            <button type="button" class="btn btn-primary fab-modificar" id="btnModificar" data-bs-toggle="modal" data-bs-target="#modalModificarAgenda" title="Modificar registro" style="display:none;">
+            <button type="button" class="btn btn-success fab-modificar" id="btnModificar" data-bs-toggle="modal" data-bs-target="#modalModificarAgenda" title="Modificar registro" style="display:none;">
               <i class="fas fa-edit"></i>
             </button>
           </div>
@@ -126,7 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["eliminar"])) {
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <form method="POST" action="agregar_agenda.php">
-            <div class="modal-header bg-success text-white">
+            <div class="modal-header bg-warning">
               <h5 class="modal-title">Agregar Registro</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -173,8 +173,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["eliminar"])) {
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-              <button type="submit" class="btn btn-success">Guardar</button>
+              <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-tertiary">Guardar</button>
             </div>
           </form>
         </div>
@@ -186,7 +186,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["eliminar"])) {
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <form method="POST" action="modificar_agenda.php">
-            <div class="modal-header bg-primary text-white">
+            <div class="modal-header bg-warning">
               <h5 class="modal-title">Modificar Registro</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -237,8 +237,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["eliminar"])) {
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-              <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+              <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-tertiary">Guardar Cambios</button>
             </div>
           </form>
         </div>

@@ -63,7 +63,7 @@ $paginaActual = basename($_SERVER['PHP_SELF']);
   
   <main class="main-content" id="mainContent">
     <div class="container-fluid">
-      <h2 class="mb-4">Reportes de Clases y Exámenes</h2>
+      <CENTER><h2 class="mb-4">Reportes de Clases y Exámenes</h2></CENTER>
 
       <!-- Formulario para seleccionar mes y generar estado de cuenta -->
 <div class="card shadow mb-4">
@@ -74,7 +74,7 @@ $paginaActual = basename($_SERVER['PHP_SELF']);
         <input type="month" id="mes" name="mes" class="form-control" required>
       </div>
       <div class="col-md-4">
-        <button type="submit" class="btn btn-success w-100">
+        <button type="submit" class="btn-anaranjado btn-success w-100">
           <i class="fas fa-file-invoice-dollar me-2"></i> Generar Estado de Cuenta
         </button>
       </div>
@@ -137,15 +137,15 @@ $paginaActual = basename($_SERVER['PHP_SELF']);
       <!-- Tabla -->
       <div class="card shadow mb-4">
         <div class="card-header encabezado-custom">
-          <h5 class="mb-0"><i class="fas fa-user-tie me-2"></i>Instructores con Más Clases</h5>
+          <h5 class="mb-0"><i class="fas fa-user-tie me-2"></i>Instructores con más clases</h5>
         </div>
         <div class="card-body">
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>Instructor</th>
-                  <th>Clases Impartidas</th>
+                  <th class="encabezado-oscuro">Instructor</th>
+                  <th class="encabezado-oscuro">Clases Impartidas</th>
                 </tr>
               </thead>
               <tbody>
@@ -167,118 +167,191 @@ $paginaActual = basename($_SERVER['PHP_SELF']);
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    // Menú hamburguesa
-    document.addEventListener('DOMContentLoaded', function() {
-      const sidebar = document.getElementById('sidebar');
-      const menuToggle = document.getElementById('menuToggle');
+  // Menú hamburguesa
+  document.addEventListener('DOMContentLoaded', function() {
+    const sidebar = document.getElementById('sidebar');
+    const menuToggle = document.getElementById('menuToggle');
+    const mainContent = document.getElementById('mainContent');
 
-      if (menuToggle && sidebar) {
-        menuToggle.addEventListener('click', function(e) {
-          e.stopPropagation();
-          sidebar.classList.toggle('active');
-          
-          const icon = this.querySelector('i');
-          icon.classList.toggle('fa-bars');
-          icon.classList.toggle('fa-times');
-        });
+    if (menuToggle && sidebar && mainContent) {
+      menuToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        sidebar.classList.toggle('active');
+        mainContent.classList.toggle('sidebar-open');
 
-        document.addEventListener('click', function(e) {
-          if (!sidebar.contains(e.target) && e.target !== menuToggle && !menuToggle.contains(e.target)) {
-            sidebar.classList.remove('active');
-            const icon = menuToggle.querySelector('i');
-            if (icon.classList.contains('fa-times')) {
-              icon.classList.remove('fa-times');
-              icon.classList.add('fa-bars');
-            }
-          }
-        });
+        const icon = this.querySelector('i');
+        icon.classList.toggle('fa-bars');
+        icon.classList.toggle('fa-times');
+      });
 
-        function handleResize() {
-          if (window.innerWidth >= 768) {
-            sidebar.classList.remove('active');
-            const icon = menuToggle.querySelector('i');
-            if (icon.classList.contains('fa-times')) {
-              icon.classList.remove('fa-times');
-              icon.classList.add('fa-bars');
-            }
+      document.addEventListener('click', function(e) {
+        if (!sidebar.contains(e.target) && e.target !== menuToggle && !menuToggle.contains(e.target)) {
+          sidebar.classList.remove('active');
+          mainContent.classList.remove('sidebar-open');
+          const icon = menuToggle.querySelector('i');
+          if (icon.classList.contains('fa-times')) {
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
           }
         }
+      });
 
-        window.addEventListener('resize', handleResize);
-        handleResize();
+      function handleResize() {
+        if (window.innerWidth >= 768) {
+          sidebar.classList.remove('active');
+          mainContent.classList.remove('sidebar-open');
+          const icon = menuToggle.querySelector('i');
+          if (icon.classList.contains('fa-times')) {
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+          }
+        }
       }
 
-      // Datos para gráficos desde PHP
-      const clasesPorDia = <?= json_encode(obtenerDatosClasesPorDia($pdo, $fechaInicio, $fechaFin)) ?>;
-      const resultadosExamenes = <?= json_encode(obtenerResultadosExamenes($pdo, $fechaInicio, $fechaFin)) ?>;
+      window.addEventListener('resize', handleResize);
+      handleResize();
+    }
 
-      // Gráfico de Clases por Día
-      const ctxClases = document.getElementById('graficoClases');
-      new Chart(ctxClases, {
-        type: 'bar',
-        data: {
-          labels: clasesPorDia.map(item => item.FECHA),
-          datasets: [{
-            label: 'Clases por Día',
-            data: clasesPorDia.map(item => item.total),
-            backgroundColor: 'rgba(54, 162, 235, 0.7)',
-            borderColor: 'rgba(54, 162, 235, 1)',
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            y: {
-              beginAtZero: true,
-              ticks: {
-                stepSize: 1
-              }
+    // Datos para gráficos desde PHP
+    const clasesPorDia = <?= json_encode(obtenerDatosClasesPorDia($pdo, $fechaInicio, $fechaFin)) ?>;
+    const resultadosExamenes = <?= json_encode(obtenerResultadosExamenes($pdo, $fechaInicio, $fechaFin)) ?>;
+
+    // Gráfico de Clases por Día
+    const ctxClases = document.getElementById('graficoClases');
+    new Chart(ctxClases, {
+      type: 'bar',
+      data: {
+        labels: clasesPorDia.map(item => item.FECHA),
+        datasets: [{
+          label: 'Clases por Día',
+          data: clasesPorDia.map(item => item.total),
+          backgroundColor: 'rgba(54, 162, 235, 0.7)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 1
             }
           }
         }
-      });
-
-      // Gráfico de Resultados de Exámenes
-      const ctxExamenes = document.getElementById('graficoExamenes');
-      new Chart(ctxExamenes, {
-        type: 'pie',
-        data: {
-          labels: ['Aprobados Teórico', 'Reprobados Teórico', 'Aprobados Práctico', 'Reprobados Práctico'],
-          datasets: [{
-            data: [
-              resultadosExamenes.aprobados_teo,
-              resultadosExamenes.reprobados_teo,
-              resultadosExamenes.aprobados_prac,
-              resultadosExamenes.reprobados_prac
-            ],
-            backgroundColor: [
-              'rgba(75, 192, 192, 0.7)',
-              'rgba(255, 99, 132, 0.7)',
-              'rgba(153, 102, 255, 0.7)',
-              'rgba(255, 159, 64, 0.7)'
-            ],
-            borderColor: [
-              'rgba(75, 192, 192, 1)',
-              'rgba(255, 99, 132, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false
-        }
-      });
+      }
     });
-  </script>
+
+    // Gráfico de Resultados de Exámenes
+    const ctxExamenes = document.getElementById('graficoExamenes');
+    new Chart(ctxExamenes, {
+      type: 'pie',
+      data: {
+        labels: ['Aprobados Teórico', 'Reprobados Teórico', 'Aprobados Práctico', 'Reprobados Práctico'],
+        datasets: [{
+          data: [
+            resultadosExamenes.aprobados_teo,
+            resultadosExamenes.reprobados_teo,
+            resultadosExamenes.aprobados_prac,
+            resultadosExamenes.reprobados_prac
+          ],
+          backgroundColor: [
+            'rgba(75, 192, 192, 0.7)',
+            'rgba(255, 99, 132, 0.7)',
+            'rgba(153, 102, 255, 0.7)',
+            'rgba(255, 159, 64, 0.7)'
+          ],
+          borderColor: [
+            'rgba(75, 192, 192, 1)',
+            'rgba(255, 99, 132, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false
+      }
+    });
+  });
+</script>
 
    <footer>
       <p>&copy; 2025 Start & Go. Todos los derechos reservados.</p>
     </footer>
-    
+    <style>
+      body.dark-mode .card-header {
+  background-color: #2a2a2a;
+  color: #ffffff;
+  border-bottom: 1px solid #444;
+}
+
+body.dark-mode .encabezado-custom {
+  background-color: #2a2a2a;
+  color: #ffffff;
+}
+
+  body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+  }
+
+  body.dark-mode .card,
+  body.dark-mode .card-body,
+  body.dark-mode .card-header,
+  body.dark-mode .form-control,
+  body.dark-mode .form-select,
+  body.dark-mode .table,
+  body.dark-mode .modal-body {
+    background-color: #1e1e1e;
+    color: #fff;
+    border-color: #333;
+  }
+
+  body.dark-mode input,
+  body.dark-mode select,
+  body.dark-mode option {
+    background-color: #2a2a2a;
+    color: #fff;
+  }
+
+  body.dark-mode th,
+  body.dark-mode td {
+    color: #fff;
+  }
+
+  body.dark-mode .table-striped tbody tr:nth-of-type(odd) {
+    background-color: #2c2c2c;
+  }
+
+  body.dark-mode .btn-anaranjado {
+    background-color: #ff5e2e;
+    border-color: #ff5e2e;
+  }
+
+  body.dark-mode footer {
+    background-color: #1a1a1a;
+    color: #ccc;
+  }
+
+  body.dark-mode .form-label {
+    color: #fff;
+  }
+body.dark-mode th {
+  background-color: #2a2a2a !important;
+  color: #ffffff !important;
+  border-color: #444 !important;
+}
+body.dark-mode td {
+  background-color: #2a2a2a !important;
+  color: #ffffff !important;
+  border-color: #444 !important;
+}
+</style>
+
 </body>
 </html>
