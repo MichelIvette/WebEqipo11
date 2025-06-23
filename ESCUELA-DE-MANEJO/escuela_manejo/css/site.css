@@ -12,6 +12,7 @@ body {
     background-color: #f8f9fa;
     color: #202424;
     overflow-x: hidden;
+    overscroll-behavior: none;
 }
 body.no-scroll {
     overflow: hidden;
