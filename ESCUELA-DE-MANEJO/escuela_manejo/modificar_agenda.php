@@ -8,6 +8,8 @@ if (!isset($_SESSION["activa"])) {
 // CONEXIÓN A LA BASE DE DATOS
 require_once 'conexion.php';
 
+require_once 'verificar_rol.php';
+
 try {
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {

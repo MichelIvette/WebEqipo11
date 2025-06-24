@@ -1,5 +1,4 @@
 <?php
-error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
 
 /* Para habilitar el uso de NameSpaces */
 spl_autoload_register (function ($clase) {

@@ -8,6 +8,8 @@ if (!isset($_SESSION["activa"])) {
 // CONEXIÓN A LA BASE DE DATOS
 require_once 'conexion.php';
 
+require_once 'verificar_rol.php';
+
 
 // Procesar modificación de alumno
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

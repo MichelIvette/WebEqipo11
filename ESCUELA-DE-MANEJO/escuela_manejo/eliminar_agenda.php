@@ -5,6 +5,8 @@ if (!isset($_SESSION["activa"])) {
     exit;
 }
 
+require_once 'verificar_rol.php';
+
 // Función para mostrar errores amigables
 function mostrarError($mensaje) {
     $_SESSION['mensaje'] = "<div class='alert alert-danger'>$mensaje</div>";

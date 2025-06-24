@@ -9,6 +9,8 @@ $usuario = $_SESSION["usuario"];
 // CONEXIÓN A LA BASE DE DATOS
 require_once 'conexion.php';
 
+require_once 'verificar_rol.php';
+
 // Variables para mensajes
 $errorMensaje = "";
 $exitoMensaje = "";
