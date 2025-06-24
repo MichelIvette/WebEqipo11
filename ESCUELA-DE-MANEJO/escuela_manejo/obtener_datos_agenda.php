@@ -11,6 +11,7 @@ require_once 'conexion.php';
 header('Content-Type: application/json');
 
 try {
+    
     $fechaInicio = $_POST['fechaInicio'] ?? date('Y-m-d', strtotime('-30 days'));
     $fechaFin = $_POST['fechaFin'] ?? date('Y-m-d');
     $tipoReporte = $_POST['tipoReporte'] ?? 'actividades';

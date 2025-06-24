@@ -8,7 +8,9 @@ $usuario = $_SESSION["usuario"];
 
 // CONEXIÓN A LA BASE DE DATOS
 require_once 'conexion.php';
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -24,6 +26,7 @@ require_once 'conexion.php';
   <link rel="stylesheet" href="css/site.css">
 </head>
 <body>
+  <div class="wrapper">
     <?php include 'menu.php'; ?>
 
     <main class="main-content" id="mainContent">
@@ -50,7 +53,7 @@ require_once 'conexion.php';
             </button>
           </div>
 
-          <div class="mb-3">
+          <div class="esp mb-3">
             <input type="text" id="busquedaTabla" class="form-control" placeholder="Buscar en la tabla...">
           </div>
 
@@ -411,6 +414,8 @@ document.getElementById('confirmarEliminarBtn').addEventListener('click', functi
     if (menuToggle && sidebar && mainContent) {
       menuToggle.addEventListener('click', function() {
         const isActive = sidebar.classList.toggle('active');
+        mainContent.classList.toggle('sidebar-open', isActive);
+        document.body.classList.toggle('no-scroll', isActive);
       });
 
       document.addEventListener('click', function(event) {
@@ -420,7 +425,6 @@ document.getElementById('confirmarEliminarBtn').addEventListener('click', functi
           document.body.classList.remove('no-scroll');
         }
       });
-
     }
 
     // Inicializar botones
