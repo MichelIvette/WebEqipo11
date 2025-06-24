@@ -68,7 +68,11 @@ $paginaActual = basename($_SERVER['PHP_SELF']);
       <!-- Formulario para seleccionar mes y generar estado de cuenta -->
 <div class="card shadow mb-4">
   <div class="card-body">
-    <form action="estado_cuenta.php" method="GET" class="row g-3 align-items-end">
+    <!-- Si se quiere que se habra en la misma página -->
+    <!--<form action="estado_cuenta.php" method="GET" class="row g-3 align-items-end">-->
+      <!-- Abre el estado de cuenta en una nueva pestaña -->
+      <form action="estado_cuenta.php" method="GET" class="row g-3 align-items-end" target="_blank">
+
       <div class="col-md-4">
         <label for="mes" class="form-label">Selecciona el Mes</label>
         <input type="month" id="mes" name="mes" class="form-control" required>

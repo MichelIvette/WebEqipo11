@@ -15,12 +15,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             RFC_CLIENTE, TIPO_CONTRATACION, NOMB_CLI, AP_CLI, AM_CLI, 
             FECHA_NAC, CALLE, NUMERO, COLONIA, ALCALDIA, 
             PERMISO, OBSERVACIONES, TOTAL_PAGO, FORMA_PAGO, 
-            REEMBOLSO, USUARIO, DOMINIO
+            REEMBOLSO, USUARIO, DOMINIO, FECHA_PAGO
         ) VALUES (
             :rfc, :tipo_contratacion, :nombre, :apellido_paterno, :apellido_materno,
             :fecha_nac, :calle, :numero, :colonia, :alcaldia,
             :permiso, :observaciones, :total_pago, :forma_pago,
-            :reembolso, :usuario, :dominio
+            :reembolso, :usuario, :dominio, :fecha_pago
         )";
 
         $stmt = $pdo->prepare($sql);
@@ -41,7 +41,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ':forma_pago' => $_POST['forma_pago'] ?? null,
             ':reembolso' => $_POST['reembolso'] ?? 0,
             ':usuario' => $_POST['usuario'] ?? null,
-            ':dominio' => $_POST['dominio'] ?? null
+            ':dominio' => $_POST['dominio'] ?? null,
+            ':fecha_pago' => $_POST['fecha_pago'] ?? null
         ]);
 
         $_SESSION['mensaje'] = "<div class='alert alert-success'>Alumno agregado correctamente</div>";
@@ -50,6 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
+// Redirigir a la página principal de alumnos
 header("Location: alumnos.php");
 exit;
 ?>
