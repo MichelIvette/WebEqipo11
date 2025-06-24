@@ -2,6 +2,8 @@
 // CONEXIÓN A LA BASE DE DATOS
 require_once 'conexion.php';
 
+require_once 'verificar_rol.php';
+
 // Obtener mes desde GET (formato: "2025-06")
 $mesSeleccionado = $_GET['mes'] ?? date('Y-m');  // por defecto el mes actual
 $inicioMes = $mesSeleccionado . "-01";

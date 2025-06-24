@@ -140,3 +140,48 @@ document.addEventListener('DOMContentLoaded', function() {
   // Ejecutar la función al cargar por si ya hay checkboxes seleccionados
   actualizarBotones();
 });
+
+/* */
+document.getElementById('confirmarEliminarBtn').addEventListener('click', function() {
+    const checkboxes = document.querySelectorAll('.fila-checkbox:checked');
+    const rfcList = Array.from(checkboxes).map(cb => cb.value);
+    
+    if (rfcList.length === 0) {
+        bootstrap.Modal.getInstance(document.getElementById('modalConfirmarEliminar')).hide();
+        return;
+    }
+
+    // Mostrar carga
+    this.disabled = true;
+    this.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Eliminando...';
+
+    fetch('eliminar_alumno.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'seleccionados=' + encodeURIComponent(JSON.stringify(rfcList))
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error en la respuesta del servidor');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            // Recargar la página para ver cambios
+            location.reload();
+        } else {
+            alert('Error: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Ocurrió un error al eliminar los registros');
+    })
+    .finally(() => {
+        bootstrap.Modal.getInstance(document.getElementById('modalConfirmarEliminar')).hide();
+    });
+});
+

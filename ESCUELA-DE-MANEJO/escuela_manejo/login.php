@@ -7,13 +7,15 @@ if (isset($_SESSION["activa"]) && $_SESSION["activa"] === true) {
 
 function validaLogin($nombre, $clave) {
     try {
-        // CONEXIÓN A LA BASE DE DATOS
         require_once 'conexion.php';
         $stmt = $pdo->prepare("SELECT * FROM usuario WHERE usuario_nombre = :nombre");
         $stmt->bindParam(':nombre', $nombre, PDO::PARAM_STR);
         $stmt->execute();
         $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $usuario && md5($clave) === $usuario["usuario_clave"];
+        if ($usuario && md5($clave) === $usuario["usuario_clave"]) {
+            return $usuario;
+        }
+        return false;
     } catch (PDOException $e) {
         return false;
     }
@@ -27,9 +29,14 @@ function creaSesion($nombre) {
 
 // Si viene POST, procesamos login
 if (isset($_POST["nombre"]) && isset($_POST["clave"])) {
-    if (validaLogin($_POST["nombre"], $_POST["clave"])) {
+    $usuarioValidado = validaLogin($_POST["nombre"], $_POST["clave"]);
+    if ($usuarioValidado) {
         $_SESSION["activa"] = true;
         $_SESSION["usuario"] = $_POST["nombre"];
+        
+        // CORRECCIÓN: Usar 'usuario_nombre' como identificador de rol
+        $_SESSION["rol"] = $usuarioValidado['usuario_nombre'];
+        
         creaSesion($_POST["nombre"]);
 
         if (isset($_POST["recordarme"])) {
@@ -41,34 +48,36 @@ if (isset($_POST["nombre"]) && isset($_POST["clave"])) {
         header("Location: dentro.php");
         exit;
     } else {
-        $error = "Usuario y/o contraseña incorrectos."; //Cambio de mensaje 31-05-2025
+        $error = "Usuario y/o contraseña incorrectos.";
     }
 }
+
 if (!isset($_SESSION["activa"]) && isset($_COOKIE["usuario_recordado"])) {
-    $usuario = $_COOKIE["usuario_recordado"];
+    $nombre = $_COOKIE["usuario_recordado"];
 
-    // Validar el usuario desde la base de datos
     try {
-        $pdo = new PDO("mysql:host=localhost;dbname=prueba", "root", "53304917Mm$");
-        $stmt = $pdo->prepare("SELECT COUNT(*) FROM usuario WHERE usuario_nombre = :usuario");
-        $stmt->bindParam(':usuario', $usuario, PDO::PARAM_STR);
+        require_once 'conexion.php';
+        $stmt = $pdo->prepare("SELECT * FROM usuario WHERE usuario_nombre = :nombre");
+        $stmt->bindParam(':nombre', $nombre, PDO::PARAM_STR);
         $stmt->execute();
+        $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($stmt->fetchColumn() > 0) {
+        if ($usuario) {
             $_SESSION["activa"] = true;
-            $_SESSION["usuario"] = $usuario;
+            $_SESSION["usuario"] = $nombre;
+            
+            // CORRECCIÓN: Usar 'usuario_nombre' como identificador de rol
+            $_SESSION["rol"] = $usuario['usuario_nombre'];
 
-            // Refrescar la cookie
-            setcookie("usuario_recordado", $usuario, time() + (7 * 24 * 60 * 60), "/");
+            setcookie("usuario_recordado", $nombre, time() + (7 * 24 * 60 * 60), "/");
 
             header("Location: dentro.php");
             exit;
         } else {
-            // Borrar cookie inválida
             setcookie("usuario_recordado", "", time() - 3600, "/");
         }
     } catch (PDOException $e) {
-        // Silenciar o registrar error
+        // Manejar error
     }
 }
 ?>

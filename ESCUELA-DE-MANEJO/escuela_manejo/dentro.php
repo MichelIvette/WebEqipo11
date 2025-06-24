@@ -5,6 +5,8 @@ if (!isset($_SESSION["activa"])) {
     exit;
 }
 $usuario = $_SESSION["usuario"];
+
+require_once 'verificar_rol.php';
 ?>
 
 <!DOCTYPE html>

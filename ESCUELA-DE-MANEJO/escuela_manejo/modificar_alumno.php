@@ -8,6 +8,7 @@ if (!isset($_SESSION["activa"])) {
 // CONEXIÓN A LA BASE DE DATOS
 require_once 'conexion.php';
 
+require_once 'verificar_rol.php';
 
 // Procesar modificación de alumno
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -29,8 +30,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             FORMA_PAGO = :forma_pago,
             REEMBOLSO = :reembolso,
             USUARIO = :usuario,
-            DOMINIO = :dominio
+            DOMINIO = :dominio,
+            FECHA_PAGO = :fecha_pago
         WHERE RFC_CLIENTE = :rfc_original";
+
 
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
@@ -46,6 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ':alcaldia' => $_POST['alcaldia'],
             ':permiso' => $_POST['permiso'] ?? null,
             ':observaciones' => $_POST['observaciones'] ?? null,
+            ':fecha_pago' => $_POST['fecha_pago'] ?? null,
             ':total_pago' => $_POST['total_pago'] ?? 0,
             ':forma_pago' => $_POST['forma_pago'] ?? null,
             ':reembolso' => $_POST['reembolso'] ?? 0,
@@ -54,9 +58,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ':rfc_original' => $_POST['rfc_original']
         ]);
 
-        $_SESSION['mensaje'] = "<div class='alert alert-success'>Alumno modificado correctamente</div>";
+        $_SESSION['mensaje'] = "
+            <div class='alert alert-success alert-dismissible fade show m-3' role='alert'>
+                Alumno modificado correctamente.
+                <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+            </div>";
     } catch (PDOException $e) {
-        $_SESSION['mensaje'] = "<div class='alert alert-danger'>Error al modificar alumno: " . $e->getMessage() . "</div>";
+       $_SESSION['mensaje'] = "
+        <div class='alert alert-danger alert-dismissible fade show m-3' role='alert'>
+            Error al modificar alumno: " . $e->getMessage() . "
+            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+        </div>";
     }
 }
 

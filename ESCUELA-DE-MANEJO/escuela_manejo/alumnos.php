@@ -9,6 +9,7 @@ $usuario = $_SESSION["usuario"];
 // CONEXIÓN A LA BASE DE DATOS
 require_once 'conexion.php';
 
+require_once 'verificar_rol.php';
 ?>
 
 
@@ -40,6 +41,7 @@ require_once 'conexion.php';
       <div class="welcome">
         <h2>Alumnos</h2>
 
+      <!--Modal eliminar-->
         <form id="formEliminar" method="POST" action="eliminar_alumno.php">
           <div class="d-flex justify-content-between align-items-center mb-3">
             <button type="submit" id="btnEliminar" name="eliminar" class="btn btn-danger fab-eliminar" title="Eliminar seleccionados" style="display:none;">
@@ -131,32 +133,52 @@ require_once 'conexion.php';
             </div>
             <div class="modal-body row g-3">
               <div class="col-md-6">
-                <label class="form-label">RFC</label>
-                <input type="text" class="form-control" name="rfc_cliente" required maxlength="13">
+                <label for="rfc_cliente" class="form-label">RFC</label>
+                <input type="text" class="form-control" name="rfc_cliente" id="rfc_cliente" required
+                  pattern="^[A-ZÑ&]{3,4}\d{6}[A-Z0-9]{3}$"
+                  title="Debe contener 4 letras, 6 números (fecha) y 3 caracteres alfanuméricos (homoclave)">
               </div>
               <div class="col-md-6">
                 <label class="form-label">Tipo de Contratación</label>
-                <input type="text" class="form-control" name="tipo_contratacion" required>
+                <select class="form-select" name="tipo_contratacion" required>
+                  <option value=""disabled selected></option>
+                  <option value="BÁSICO">BÁSICO</option>
+                  <option value="INTERMEDIO">INTERMEDIO</option>
+                  <option value="PREMIUM">PREMIUM</option>
+                </select>
               </div>
               <div class="col-md-4">
                 <label class="form-label">Nombre</label>
-                <input type="text" class="form-control" name="nomb_cli" required>
+                <input type="text" class="form-control" name="nomb_cli" required pattern="^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]{2,}$"
+                title="Solo letras y espacios (mínimo 2 caracteres)">
               </div>
               <div class="col-md-4">
                 <label class="form-label">Apellido Paterno</label>
-                <input type="text" class="form-control" name="ap_cli" required>
+                <input type="text" class="form-control" name="ap_cli" required pattern="^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]{2,}$"
+                title="Solo letras y espacios (mínimo 2 caracteres)">
               </div>
               <div class="col-md-4">
                 <label class="form-label">Apellido Materno</label>
-                <input type="text" class="form-control" name="am_cli">
+                <input type="text" class="form-control" name="am_cli" required pattern="^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]{2,}$"
+                title="Solo letras y espacios (mínimo 2 caracteres)">
               </div>
               <div class="col-md-6">
                 <label class="form-label">Fecha de Nacimiento</label>
-                <input type="date" class="form-control" name="fecha_nac" required>
+                <input type="date" class="form-control" name="fecha_nac" value="<?= htmlspecialchars($_POST['fecha_nac'] ?? '') ?>" 
+                  min="1900-01-01"                     
+                  max="<?= date('Y-m-d') ?>"             
+                  required
+                  oninvalid="this.setCustomValidity('Verifique, la fecha introducida no es correcta')"
+                  oninput="this.setCustomValidity('')">
               </div>
               <div class="col-md-6">
                 <label class="form-label">Permiso</label>
-                <input type="text" class="form-control" name="permiso">
+                <select class="form-select" name="permiso" required>
+                  <option value=""disabled selected></option>
+                  <option value="Sí">Sí</option>
+                  <option value="No">No</option>
+                  <option value="No">En tramite</option>
+                </select>
               </div>
               <div class="col-md-6">
                 <label class="form-label">Calle</label>
@@ -176,27 +198,52 @@ require_once 'conexion.php';
               </div>
                 <div class="col-md-6">
                   <label class="form-label">Fecha de Pago</label>
-                  <input type="date" class="form-control" name="fecha_pago">
+                  <input type="date" class="form-control" name="fecha_pago" value="<?= htmlspecialchars($_POST['fecha_nac'] ?? '') ?>" 
+                  min="1900-01-01"                     
+                  max="<?= date('Y-m-d') ?>"             
+                  required
+                  oninvalid="this.setCustomValidity('Verifique, la fecha introducida no es correcta')"
+                  oninput="this.setCustomValidity('')">
                 </div>
                <div class="col-md-6">
-                <label class="form-label">Total Pago</label>
-                <input type="number" class="form-control" name="total_pago" step="0.01" min="0">
-              </div>
+                  <label class="form-label">Total Pago</label>
+                  <div class="input-group">
+                    
+                    <input type="number" class="form-control" name="total_pago" placeholder="Ej. 1500" step="1" min="0" required>
+                  </div>
+                </div>
               <div class="col-md-6">
                 <label class="form-label">Forma de Pago</label>
-                <input type="text" class="form-control" name="forma_pago">
+                <select class="form-select" name="forma_pago" required>
+                  <option value=""disabled selected></option>
+                  <option value="EFECTIVO">EFECTIVO</option>
+                  <option value="TRANSFERENCIA">TRANSFERENCIA</option>
+                  <option value="DEBITO">DEBITO</option>
+                  <option value="CREDITO">CREDITO</option>
+                  
+                </select>
               </div>
               <div class="col-md-6">
                 <label class="form-label">Reembolso</label>
-                <input type="number" class="form-control" name="reembolso" step="0.01" min="0">
+                <div class="input-group">
+                  
+                  <input type="number" class="form-control" name="reembolso" placeholder="Ej. 500" step="1" min="0" required>
+                </div>
               </div>
               <div class="col-md-6">
                 <label class="form-label">Usuario</label>
                 <input type="text" class="form-control" name="usuario">
               </div>
               <div class="col-md-6">
-                <label class="form-label">Dominio</label>
-                <input type="text" class="form-control" name="dominio">
+                <label class="form-label" for="dominio">Dominio</label>
+                <select class="form-control" name="dominio" id="dominio" required>
+                  <option value=""disabled selected></option>
+                  <option value="gmail.com">gmail.com</option>
+                  <option value="yahoo.com">yahoo.com</option>
+                  <option value="outlook.com">outlook.com</option>
+                  <option value="outlook.com">hotmail.com</option>
+                </select>
+                <input type="text" class="form-control mt-2" name="dominio_custom" id="dominio_custom" placeholder="Escribe dominio personalizado" style="display:none;">
               </div>
               <div class="col-12">
                 <label class="form-label">Observaciones</label>
@@ -226,11 +273,13 @@ require_once 'conexion.php';
 
               <div class="col-md-6">
                 <label class="form-label">RFC</label>
-                <input type="text" class="form-control" name="rfc_cliente" required maxlength="13">
+                <input type="text" class="form-control" name="rfc_cliente" required pattern="^[A-ZÑ&]{3,4}\d{6}[A-Z0-9]{3}$"
+                  title="Debe contener 4 letras, 6 números (fecha) y 3 caracteres alfanuméricos (homoclave)">
               </div>
               <div class="col-md-6">
                 <label class="form-label">Tipo de Contratación</label>
                 <input type="text" class="form-control" name="tipo_contratacion" required>
+                
               </div>
               <div class="col-md-4">
                 <label class="form-label">Nombre</label>
@@ -305,25 +354,52 @@ require_once 'conexion.php';
         </div>
       </div>
     </div>
+<!-- Modal Confirmar Eliminación Alumnos con estilo igual al modal de empleados -->
+<div class="modal fade" id="modalConfirmarEliminar" tabindex="-1" aria-labelledby="modalEliminarLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4 border-0 shadow-lg">
 
-    <!-- Modal Confirmar Eliminación -->
-    <div class="modal fade" id="modalConfirmarEliminar" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header bg-danger text-white">
-            <h5 class="modal-title">Confirmar Eliminación</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <!-- encabezado -->
+      <div class="modal-header bg-danger text-white rounded-top-4">
+        <div class="d-flex align-items-center">
+          <i class="bi bi-exclamation-triangle-fill fs-3 me-2"></i>
+          <div>
+            <h5 class="modal-title mb-0 fw-bold" id="modalEliminarLabel">Confirmar Eliminación</h5>
+            <small class="fw-normal">Operación crítica - Requiere confirmación</small>
           </div>
-          <div class="modal-body">
-            ¿Estás seguro de eliminar los alumnos seleccionados?
+        </div>
+        <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+
+      <!-- cuerpo -->
+      <div class="modal-body">
+        <div class="d-flex align-items-start mb-3">
+          <i class="bi bi-info-circle-fill text-primary fs-4 me-2 mt-1"></i>
+          <div>
+            <p class="fw-semibold mb-1">¿Estás seguro de eliminar los alumnos seleccionados?</p>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            <button type="button" id="confirmarEliminarBtn" class="btn btn-danger">Eliminar</button>
+        </div>
+        <div class="alert alert-warning d-flex align-items-center p-2 mb-0" role="alert">
+          <i class="bi bi-exclamation-circle-fill me-2"></i>
+          <div>
+            Esta acción no se puede deshacer y afectará los registros permanentemente.
           </div>
         </div>
       </div>
+
+      <!-- footer -->
+      <div class="modal-footer justify-content-between px-4 pb-4">
+        <button type="button" class="btn btn-tertiary rounded-pill px-4" data-bs-dismiss="modal">
+          <i class="bi bi-x-circle me-1"></i> Cancelar
+        </button>
+        <button type="button" id="confirmarEliminarBtn" class="btn btn-danger rounded-pill px-4">
+          <i class="bi bi-trash-fill me-1"></i> Eliminar Permanentemente
+        </button>
+      </div>
     </div>
+  </div>
+</div>
+
                 
     <footer>
       <p>&copy; 2025 Start & Go. Todos los derechos reservados.</p>

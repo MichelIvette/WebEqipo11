@@ -5,6 +5,8 @@ if (!isset($_SESSION["activa"])) {
     exit;
 }
 
+require_once 'verificar_rol.php';
+
 // Función para mostrar errores amigables
 function mostrarError($mensaje) {
     $_SESSION['mensaje'] = "<div class='alert alert-danger'>$mensaje</div>";
@@ -15,6 +17,8 @@ function mostrarError($mensaje) {
 try {
     // CONEXIÓN A LA BASE DE DATOS
     require_once 'conexion.php';
+
+    
 
     if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["seleccionados"])) {
         

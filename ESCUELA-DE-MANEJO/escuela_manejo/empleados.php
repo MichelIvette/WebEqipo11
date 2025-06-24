@@ -9,6 +9,10 @@ $usuario = $_SESSION["usuario"];
 // CONEXIÓN A LA BASE DE DATOS
 require_once 'conexion.php';
 
+require_once 'verificar_rol.php';
+
+
+
 // Variables para mensajes
 $errorMensaje = "";
 $exitoMensaje = "";
@@ -36,16 +40,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["agregar"])) {
     $alcaldia = $_POST["alcaldia"];
 
     try {
-        $sql = "INSERT INTO Empleados (RFC_EMP, NOMB_EMP, AP_EMP, AM_EMP, PUESTO, TURNO, DESCANSOS, SEXO, FECHA_NAC, TEL_PERSONAL, CALLE, NUMERO, COLONIA, ALCALDIA)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([
-            $rfc, $nombre, $ap, $am, $puesto, $turno, $descansos, $sexo,
-            $fecha_nac, $tel, $calle, $numero, $colonia, $alcaldia
-        ]);
-        $exitoMensaje = "Empleado agregado exitosamente.";
+        // Primero verificar si el RFC ya existe
+        $sql_verificar = "SELECT COUNT(*) FROM Empleados WHERE RFC_EMP = ?";
+        $stmt_verificar = $pdo->prepare($sql_verificar);
+        $stmt_verificar->execute([$rfc]);
+        
+        if ($stmt_verificar->fetchColumn() > 0) {
+            // El RFC ya existe, mostrar mensaje específico
+            $errorMensaje = "El RFC $rfc ya está registrado en el sistema.";
+        } else {
+            // El RFC no existe, proceder con la inserción
+            $sql = "INSERT INTO Empleados (RFC_EMP, NOMB_EMP, AP_EMP, AM_EMP, PUESTO, TURNO, DESCANSOS, SEXO, FECHA_NAC, TEL_PERSONAL, CALLE, NUMERO, COLONIA, ALCALDIA)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([
+                $rfc, $nombre, $ap, $am, $puesto, $turno, $descansos, $sexo,
+                $fecha_nac, $tel, $calle, $numero, $colonia, $alcaldia
+            ]);
+            $exitoMensaje = "Empleado agregado exitosamente.";
+        }
     } catch (PDOException $e) {
-        $errorMensaje = "Error al agregar empleado: " . $e->getMessage();
+        // Manejar otros posibles errores de la base de datos
+        $errorMensaje = "Error al procesar la solicitud: " . $e->getMessage();
     }
 }
 

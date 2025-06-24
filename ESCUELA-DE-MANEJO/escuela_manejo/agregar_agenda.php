@@ -5,6 +5,8 @@ if (!isset($_SESSION["activa"])) {
     exit;
 }
 
+require_once 'verificar_rol.php';
+
 // Función para mensajes de error amigables
 function mostrarError($mensaje) {
     $_SESSION['mensaje'] = "<div class='alert alert-danger'>$mensaje</div>";
@@ -12,6 +14,7 @@ function mostrarError($mensaje) {
     header("Location: agenda.php");
     exit;
 }
+
 
 try {
     // CONEXIÓN A LA BASE DE DATOS

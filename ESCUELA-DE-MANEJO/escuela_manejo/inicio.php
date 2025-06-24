@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+require_once 'verificar_rol.php';
+
 function esValida($usuario) {
     try {
         // CONEXIÓN A LA BASE DE DATOS

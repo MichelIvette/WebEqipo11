@@ -8,6 +8,8 @@ if (!isset($_SESSION["activa"])) {
 // CONEXIÓN A LA BASE DE DATOS
 require_once 'conexion.php';
 
+require_once 'verificar_rol.php';
+
 // Obtener datos para los gráficos
 function obtenerDatosClasesPorDia($pdo, $fechaInicio, $fechaFin) {
     $stmt = $pdo->prepare("SELECT FECHA, COUNT(*) as total FROM AGENDA 

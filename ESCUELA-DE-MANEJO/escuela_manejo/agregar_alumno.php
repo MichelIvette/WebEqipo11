@@ -5,10 +5,9 @@ if (!isset($_SESSION["activa"])) {
     exit;
 }
 
-// CONEXIÓN A LA BASE DE DATOS
 require_once 'conexion.php';
+require_once 'verificar_rol.php';
 
-// Procesar formulario de agregar alumno
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
         $sql = "INSERT INTO CLIENTES (
@@ -45,9 +44,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ':fecha_pago' => $_POST['fecha_pago'] ?? null
         ]);
 
-        $_SESSION['mensaje'] = "<div class='alert alert-success'>Alumno agregado correctamente</div>";
+        $_SESSION['mensaje'] = "
+            <div class='alert alert-success alert-dismissible fade show m-3' role='alert'>
+                Alumno agregado correctamente.
+                <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+            </div>";
     } catch (PDOException $e) {
-        $_SESSION['mensaje'] = "<div class='alert alert-danger'>Error al agregar alumno: " . $e->getMessage() . "</div>";
+        if (str_contains($e->getMessage(), '1062')) {
+            // Error de clave duplicada (RFC repetido)
+            $_SESSION['mensaje'] = "
+                <div class='rfc-duplicado alert alert-danger alert-dismissible fade show m-3' role='alert'>
+                    ⚠️ Ya existe un alumno con ese RFC.
+                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                </div>";
+        } else {
+            $_SESSION['mensaje'] = "
+                <div class='rfc-duplicado alert alert-danger alert-dismissible fade show m-3' role='alert'>
+                    ❌ Error al agregar alumno.
+                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                </div>";
+
+        }
     }
 }
 

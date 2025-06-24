@@ -35,6 +35,7 @@ header {
 
 .logo-container {
     width: 200px;
+    padding-left: 25px;
 }
 /*--------------------------------*/
 
@@ -596,3 +597,27 @@ p.fw-semibold.mb-1 {
 .esp {
   margin-left: 1.5%; 
 }
+
+/* Estilo para RFC duplicado */
+.rfc-duplicado {
+  background-color: #f8d7da !important; 
+  color: #000 !important;             
+  font-weight: bold;
+}
+
+.icon-foquito {
+  color: #f4d03f;           /* amarillo foco */
+  text-decoration: none;
+  margin-right: 8px;
+  font-size: 1.3rem;
+  cursor: pointer;
+  padding-right: 10px;
+  display: flex;
+  align-items: center;
+  transition: color 0.3s ease;
+}
+
+.icon-foquito:hover {
+  color: #ffea85; /* amarillo más claro al pasar el mouse */
+}
+
